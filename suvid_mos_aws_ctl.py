@@ -1,5 +1,24 @@
 import boto3
 
-s3 = boto3.resource('s3')
-for bucket in s3.buckets.all():
-    print(bucket.name)
+client = boto3.client('iot-data')
+
+response = client.get_thing_shadow(
+    thingName='esp8266_10A10D'
+)
+
+
+client = boto3.client('iot-data')
+
+response = client.get_thing_shadow(
+    thingName='esp8266_10A10D'
+)
+
+print(response)
+
+for s in response['payload']:
+    print(s)
+
+response = client.update_thing_shadow(
+    thingName='esp8266_10A10D',
+    payload=b'{"state":{"desired":{"on":true}}}'
+)
